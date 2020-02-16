@@ -4,7 +4,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { ThemeProvider, CssBaseline } from '@material-ui/core'
 
 import store, { history } from 'modules'
-import { startApp } from 'modules/app'
+import { startApp, fetchData } from 'modules/app'
 import { AppContainer } from 'components'
 import theme from 'theme'
 import './App.scss'
@@ -12,6 +12,7 @@ import './App.scss'
 const App = () => {
   useEffect(() => {
     store.dispatch(startApp())
+    store.dispatch(fetchData())
   }, [])
 
   return (

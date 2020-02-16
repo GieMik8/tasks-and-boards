@@ -1,14 +1,9 @@
-import { normalize } from 'normalizr'
-import deepmerge from 'deepmerge'
-
-import { board, task, collumn } from './schemas'
-
 export const boards = [
   { id: 'd0d77c88-aad1-416b-8f97-fbb206268a6f', title: 'Main' },
   { id: 'b993e3fd-bb22-400e-9274-11cae57ac240', title: 'Other' },
 ]
 
-export const collumns = [
+export const columns = [
   {
     id: '5e20fed7-eec4-4f2b-bff1-097ed72fdd6b',
     title: 'Collumn 1',
@@ -43,21 +38,3 @@ export const tasks = [
     columnId: '1c692df4-1321-42ff-afa1-15b466923b05',
   },
 ]
-
-export const normalized = {
-  boards: normalize(boards, [board]),
-  tasks: normalize(tasks, [task]),
-  collumns: normalize(collumns, [collumn]),
-}
-
-export const entities = deepmerge.all([
-  normalized.boards.entities,
-  normalized.tasks.entities,
-  normalized.collumns.entities,
-])
-
-export const results = {
-  boards: normalized.boards.result,
-  tasks: normalized.tasks.result,
-  collumns: normalized.collumns.result,
-}

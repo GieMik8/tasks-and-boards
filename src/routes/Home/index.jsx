@@ -9,7 +9,7 @@ export default () => {
   const classes = useStyles()
   const boardsList = useSelector(state => state.app.get('boards'))
   const boardsById = useSelector(state => state.app.getIn(['entities', 'boards']))
-
+  console.log({ boardsById })
   return (
     <div className={classes.root}>
       <Typography variant="h5">Boards</Typography>
