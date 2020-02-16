@@ -3,7 +3,6 @@ import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createEpicMiddleware } from 'redux-observable'
-import { persistStore } from 'redux-persist'
 
 import createRootReducer from './rootReducer'
 import rootEpic from './rootEpic'
@@ -26,7 +25,5 @@ const configureStore = preloadedState => {
 }
 
 const store = configureStore()
-
-export const persistor = persistStore(store)
 
 export default store

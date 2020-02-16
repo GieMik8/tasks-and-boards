@@ -1,23 +1,8 @@
 import { handleActions } from 'redux-actions'
-import { persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import { Map } from 'immutable'
 
-import { test } from './actions'
+const initialState = Map()
 
-const initialState = { test: true }
+const uiReducer = handleActions({}, initialState)
 
-const appReducer = handleActions(
-  {
-    [test]: (state, { payload }) => ({ ...state, test: payload }),
-  },
-  initialState,
-)
-
-const persistConfig = {
-  key: 'ui',
-  storage,
-}
-
-const uiPersistedReducer = persistReducer(persistConfig, appReducer)
-
-export default uiPersistedReducer
+export default uiReducer
