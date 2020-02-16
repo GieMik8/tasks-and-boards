@@ -26,5 +26,6 @@ module.exports = {
   plugins: ['react', 'prettier'],
   rules: {
     'no-console': 'off',
+    'import/prefer-default-export': 'off',
   },
 }
