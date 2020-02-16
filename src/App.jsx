@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import './App.scss'
 
-import store from 'modules'
+import store, { persistor } from 'modules'
 import { startApp } from 'modules/app'
 
 const App = () => {
@@ -12,9 +13,11 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <div className="App">
-        <p>Nothingness</p>
-      </div>
+      <PersistGate loading={null} persistor={persistor}>
+        <div className="App">
+          <p>Nothingness</p>
+        </div>
+      </PersistGate>
     </Provider>
   )
 }
