@@ -5,8 +5,6 @@ import './App.scss'
 import store from 'modules'
 import { startApp } from 'modules/app'
 
-console.log(process.env)
-
 const App = () => {
   useEffect(() => {
     store.dispatch(startApp())
