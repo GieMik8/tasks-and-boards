@@ -1,13 +1,13 @@
 import { handleActions } from 'redux-actions'
 import { Map, List, fromJS } from 'immutable'
 
-import { appStarted, fetchDataSuccess } from './actions'
+import { appStarted, fetchDataSuccess, moveTask, reorderTask } from './actions'
 
 const initialState = Map({
   isReady: false,
   entities: Map(),
   boards: List(),
-  collumns: List(),
+  columns: List(),
   tasks: List(),
 })
 
@@ -18,10 +18,34 @@ const appReducer = handleActions(
       state
         .set('entities', fromJS(payload.entities))
         .set('boards', fromJS(payload.boards))
-        .set('collumns', fromJS(payload.collumns))
+        .set('columns', fromJS(payload.columns))
         .set('tasks', fromJS(payload.tasks))
-        .set('collumnsByBoardId', fromJS(payload.collumnsByBoardId))
-        .set('tasksByCollumnId', fromJS(payload.tasksByCollumnId)),
+        .set('columnsByBoardId', fromJS(payload.columnsByBoardId))
+        .set('tasksByColumnId', fromJS(payload.tasksByColumnId)),
+    [moveTask]: (state, { payload }) =>
+      state
+        .setIn(['entities', 'tasks', payload.taskId, 'columnId'], payload.to)
+        .setIn(
+          ['tasksByColumnId', payload.from.columnId],
+          state.getIn(['tasksByColumnId', payload.from.columnId]).delete(payload.from.index),
+        )
+        .setIn(
+          ['tasksByColumnId', payload.to.columnId],
+          (state.getIn(['tasksByColumnId', payload.to.columnId]) || List()).insert(
+            payload.to.index,
+            payload.taskId,
+          ),
+        ),
+    [reorderTask]: (state, { payload }) => {
+      let tasks = state.getIn(['tasksByColumnId', payload.columnId])
+      const targetTask = tasks.get(payload.from)
+      if (payload.from > payload.to) {
+        tasks = tasks.delete(payload.from).insert(payload.to, targetTask)
+      } else {
+        tasks = tasks.insert(payload.to + 1, targetTask).delete(payload.from)
+      }
+      return state.setIn(['tasksByColumnId', payload.columnId], tasks)
+    },
   },
   initialState,
 )

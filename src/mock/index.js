@@ -33,6 +33,21 @@ export const tasks = [
     columnId: '5e20fed7-eec4-4f2b-bff1-097ed72fdd6b',
   },
   {
+    id: '7610dc2b-85dc-4095-8859-6adce406c744',
+    title: 'Task 3',
+    columnId: '5e20fed7-eec4-4f2b-bff1-097ed72fdd6b',
+  },
+  {
+    id: '7610dc2b-85dc-4095-8859-6adce406c745',
+    title: 'Task 4',
+    columnId: '5e20fed7-eec4-4f2b-bff1-097ed72fdd6b',
+  },
+  {
+    id: '7610dc2b-85dc-4095-8859-6adce406c746',
+    title: 'Task 5',
+    columnId: 'd698a740-1ec9-4f02-9924-2dfde64d651a',
+  },
+  {
     id: '03c2c1d8-d446-46bf-bf3d-cea05aa05e4a',
     title: 'Task 2',
     columnId: '1c692df4-1321-42ff-afa1-15b466923b05',
