@@ -9,6 +9,8 @@ import rootEpic from './rootEpic'
 
 export const history = createBrowserHistory()
 
+// TODO: persist store
+
 const composeEnhancers = composeWithDevTools({})
 const epicMiddleware = createEpicMiddleware()
 
