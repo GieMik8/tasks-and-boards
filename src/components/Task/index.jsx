@@ -1,11 +1,11 @@
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import PropTypes from 'prop-types'
-// import { useSelector } from 'react-redux'
+import { Typography, Button } from '@material-ui/core'
 
 import useStyles from './style'
 
-const Task = ({ id, title, index }) => {
+const Task = ({ id, title, description, index, onEdit }) => {
   const classes = useStyles()
 
   return (
@@ -17,7 +17,9 @@ const Task = ({ id, title, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <h4>{title}</h4>
+          <Typography variant="h6">{title}</Typography>
+          <Typography>{description}</Typography>
+          <Button onClick={onEdit}>Edit</Button>
         </div>
       )}
     </Draggable>
@@ -28,6 +30,12 @@ Task.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+  onEdit: PropTypes.func,
+}
+
+Task.defaultProps = {
+  onEdit: () => {},
 }
 
 export default Task

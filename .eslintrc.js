@@ -23,8 +23,10 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['react', 'prettier'],
+  plugins: ['react', 'prettier', 'react-hooks'],
   rules: {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     'no-console': 'off',
     'import/prefer-default-export': 'off',
     'react/jsx-props-no-spreading': 'off',

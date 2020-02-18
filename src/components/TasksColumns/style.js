@@ -4,6 +4,8 @@ export default makeStyles(() => ({
   root: {
     display: 'flex',
     backgroundColor: 'red',
-    padding: '10px 20px',
+    padding: '10px 0',
+    minHeight: '80vh',
+    overflow: 'auto',
   },
 }))

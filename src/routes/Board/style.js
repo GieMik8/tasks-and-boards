@@ -4,7 +4,7 @@ export default makeStyles({
   root: {
     // backgroundColor: 'red',
   },
-  context: {
+  wrapper: {
     // backgroundColor: 'yellow',
   },
 })

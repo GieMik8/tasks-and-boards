@@ -23,7 +23,7 @@ const fetchDataEpic = action$ =>
         { boards: [board], tasks: [task], columns: [column] },
       )
       const payload = {
-        ...normalized.result,
+        boards: normalized.result.boards,
         entities: normalized.entities,
         columnsByBoardId: getGroupedByParameter(columns, 'boardId'),
         tasksByColumnId: getGroupedByParameter(tasks, 'columnId'),
