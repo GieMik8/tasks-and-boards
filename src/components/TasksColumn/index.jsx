@@ -2,19 +2,21 @@ import React, { useMemo, useCallback } from 'react'
 import { Droppable } from 'react-beautiful-dnd'
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { List } from 'immutable'
 import { Link, useParams, useHistory } from 'react-router-dom'
-import { Typography } from '@material-ui/core'
+import { Typography, Button } from '@material-ui/core'
 import QueryString from 'query-string'
 
+import { deleteTask } from 'modules/app'
 import { Task } from 'components'
 import useStyles from './style'
 
-const TasksColumn = ({ id }) => {
+const TasksColumn = ({ id, onCreateTask }) => {
   const classes = useStyles()
   const { boardId } = useParams()
   const history = useHistory()
+  const dispatch = useDispatch()
   const tasks = useSelector(state => state.app.getIn(['tasksByColumnId', id]) || List())
   const tasksById = useSelector(state => state.app.getIn(['entities', 'tasks']))
   const column = useSelector(state => state.app.getIn(['entities', 'columns', id]))
@@ -36,6 +38,8 @@ const TasksColumn = ({ id }) => {
     },
     [history, boardId],
   )
+
+  const onDeleteTask = useCallback(taskId => dispatch(deleteTask(taskId)), [dispatch])
 
   return (
     <Droppable droppableId={id}>
@@ -65,9 +69,11 @@ const TasksColumn = ({ id }) => {
                     description: task.get('description'),
                   })
                 }
+                onDelete={() => onDeleteTask(taskId)}
               />
             )
           })}
+          <Button onClick={onCreateTask}>Create task</Button>
         </div>
       )}
     </Droppable>
@@ -76,6 +82,11 @@ const TasksColumn = ({ id }) => {
 
 TasksColumn.propTypes = {
   id: PropTypes.string.isRequired,
+  onCreateTask: PropTypes.func,
+}
+
+TasksColumn.defaultProps = {
+  onCreateTask: () => {},
 }
 
 export default TasksColumn

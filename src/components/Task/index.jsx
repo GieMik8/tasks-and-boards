@@ -5,7 +5,7 @@ import { Typography, Button } from '@material-ui/core'
 
 import useStyles from './style'
 
-const Task = ({ id, title, description, index, onEdit }) => {
+const Task = ({ id, title, description, index, onEdit, onDelete }) => {
   const classes = useStyles()
 
   return (
@@ -20,6 +20,7 @@ const Task = ({ id, title, description, index, onEdit }) => {
           <Typography variant="h6">{title}</Typography>
           <Typography>{description}</Typography>
           <Button onClick={onEdit}>Edit</Button>
+          <Button onClick={onDelete}>Delete</Button>
         </div>
       )}
     </Draggable>
@@ -32,10 +33,12 @@ Task.propTypes = {
   index: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
 }
 
 Task.defaultProps = {
   onEdit: () => {},
+  onDelete: () => {},
 }
 
 export default Task

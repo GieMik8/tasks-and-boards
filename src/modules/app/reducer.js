@@ -9,14 +9,18 @@ import {
   createColumn,
   editColumn,
   editTask,
+  createTask,
+  deleteTask,
 } from './actions'
 
 const initialState = Map({
   isReady: false,
   entities: Map(),
   boards: List(),
-  columns: List(),
-  tasks: List(),
+  columnsByBoardId: Map(),
+  tasksByColumnId: Map(),
+  // columns: List(),
+  // tasks: List(),
 })
 
 const appReducer = handleActions(
@@ -28,20 +32,20 @@ const appReducer = handleActions(
         .set('boards', fromJS(payload.boards))
         .set('columnsByBoardId', fromJS(payload.columnsByBoardId))
         .set('tasksByColumnId', fromJS(payload.tasksByColumnId)),
-    [moveTask]: (state, { payload }) =>
-      state
+    [moveTask]: (state, { payload }) => {
+      const sourceTasksList = state.getIn(['tasksByColumnId', payload.from.columnId])
+      const destinationTasksList = state.getIn(['tasksByColumnId', payload.to.columnId]) || List()
+      return state
         .setIn(['entities', 'tasks', payload.taskId, 'columnId'], payload.to)
         .setIn(
           ['tasksByColumnId', payload.from.columnId],
-          state.getIn(['tasksByColumnId', payload.from.columnId]).delete(payload.from.index),
+          sourceTasksList.delete(payload.from.index),
         )
         .setIn(
           ['tasksByColumnId', payload.to.columnId],
-          (state.getIn(['tasksByColumnId', payload.to.columnId]) || List()).insert(
-            payload.to.index,
-            payload.taskId,
-          ),
-        ),
+          destinationTasksList.insert(payload.to.index, payload.taskId),
+        )
+    },
     [reorderTask]: (state, { payload }) => {
       let tasks = state.getIn(['tasksByColumnId', payload.columnId])
       const targetTask = tasks.get(payload.from)
@@ -67,6 +71,23 @@ const appReducer = handleActions(
         .set('title', payload.title)
         .set('description', payload.description)
       return state.setIn(['entities', 'tasks', payload.id], task)
+    },
+    [createTask]: (state, { payload }) => {
+      const targetColumnTasks = state.getIn(['tasksByColumnId', payload.columnId]) || List()
+      return state
+        .setIn(['entities', 'tasks', payload.id], fromJS(payload))
+        .setIn(['tasksByColumnId', payload.columnId], targetColumnTasks.push(payload.id))
+    },
+    [deleteTask]: (state, { payload }) => {
+      const targetTask = state.getIn(['entities', 'tasks', payload])
+      const targetColumnId = targetTask.get('columnId')
+      const targetColumnTasksList = state.getIn(['tasksByColumnId', targetColumnId])
+      return state
+        .setIn(
+          ['tasksByColumnId', targetColumnId],
+          targetColumnTasksList.filterNot(id => id === payload),
+        )
+        .deleteIn(['entities', 'tasks', payload])
     },
   },
   initialState,

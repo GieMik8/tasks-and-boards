@@ -12,6 +12,7 @@ import {
   createColumn as createColumnAction,
   editColumn as editColumnAction,
   editTask as editTaskAction,
+  createTask as createTaskAction,
 } from 'modules/app'
 import { TasksColumns, TasksColumn, ColumnControlModal, TaskControlModal } from 'components'
 import { useQuery } from 'hooks'
@@ -22,16 +23,18 @@ export default () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const params = useParams()
-  const { column = false, title = '', description = '', task = false } = useQuery()
-  const [createColumnModalOpened, setCreateColumnModalOpened] = useState(false)
+  const { column = false, task = false, title = '', description = '' } = useQuery()
+  const [creatingColumn, setCreatingColumn] = useState(false)
+  const [creatingTaskInColumn, setCreatingTaskInColumn] = useState(false)
 
   const columnsList = useSelector(state => state.app.getIn(['columnsByBoardId', params.boardId]))
   const board = useSelector(state => state.app.getIn(['entities', 'boards', params.boardId]))
 
-  const openCreateModal = useCallback(() => setCreateColumnModalOpened(true), [])
+  const openCreateModal = useCallback(() => setCreatingColumn(true), [])
 
   const closeModals = useCallback(() => {
-    setCreateColumnModalOpened(false)
+    setCreatingTaskInColumn(false)
+    setCreatingColumn(false)
     history.replace(`/boards/${params.boardId}`)
   }, [history, params.boardId])
 
@@ -92,6 +95,21 @@ export default () => {
     [dispatch, closeModals, task],
   )
 
+  const createTask = useCallback(
+    payload => {
+      dispatch(
+        createTaskAction({
+          id: uuid(),
+          columnId: creatingTaskInColumn,
+          title: payload.title,
+          description: payload.description,
+        }),
+      )
+      closeModals()
+    },
+    [dispatch, closeModals, creatingTaskInColumn],
+  )
+
   if (!board) {
     return null
   }
@@ -103,22 +121,27 @@ export default () => {
         <DragDropContext onDragEnd={onDrag}>
           <TasksColumns>
             {columnsList.map(columnId => (
-              <TasksColumn key={columnId} id={columnId} />
+              <TasksColumn
+                onCreateTask={() => setCreatingTaskInColumn(columnId)}
+                key={columnId}
+                id={columnId}
+              />
             ))}
             <Button onClick={openCreateModal} variant="outlined" color="secondary">
               <AddIcon />
             </Button>
           </TasksColumns>
         </DragDropContext>
-        <ColumnControlModal
-          open={createColumnModalOpened}
-          onSubmit={createColumn}
-          onClose={closeModals}
-        />
+        <ColumnControlModal open={creatingColumn} onSubmit={createColumn} onClose={closeModals} />
         <ColumnControlModal
           open={!!column}
           initial={title}
           onSubmit={editColumn}
+          onClose={closeModals}
+        />
+        <TaskControlModal
+          open={!!creatingTaskInColumn}
+          onSubmit={createTask}
           onClose={closeModals}
         />
         <TaskControlModal
