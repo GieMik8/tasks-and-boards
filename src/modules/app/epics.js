@@ -5,7 +5,7 @@ import { normalize } from 'normalizr'
 
 import { boards, columns, tasks } from 'mock'
 import { task, board, column } from 'mock/schemas'
-import { getGroupedByParameter } from 'utils'
+import { getGroupedIdsByParameter } from 'utils'
 import { startApp, appStarted, fetchData, fetchDataSuccess } from './actions'
 
 const initEpic = action$ =>
@@ -25,8 +25,8 @@ const fetchDataEpic = action$ =>
       const payload = {
         boards: normalized.result.boards,
         entities: normalized.entities,
-        columnsByBoardId: getGroupedByParameter(columns, 'boardId'),
-        tasksByColumnId: getGroupedByParameter(tasks, 'columnId'),
+        columnsByBoardId: getGroupedIdsByParameter(columns, 'boardId'),
+        tasksByColumnId: getGroupedIdsByParameter(tasks, 'columnId'),
       }
       return of(fetchDataSuccess(payload))
     }),

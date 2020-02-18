@@ -5,8 +5,11 @@ export const createActionSet = actionName => ({
   actionName,
 })
 
-export const getGroupedByParameter = (items, paramaterName, idParameter = 'id') =>
+export const getGroupedIdsByParameter = (items, paramaterName, idParameter = 'id') =>
   items.reduce((accumulated, currentItem) => {
+    if (!currentItem[paramaterName] || !currentItem[idParameter]) {
+      return accumulated
+    }
     if (accumulated[currentItem[paramaterName]]) {
       accumulated[currentItem[paramaterName]].push(currentItem[idParameter])
     } else {
