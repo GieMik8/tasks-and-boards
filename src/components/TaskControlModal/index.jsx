@@ -4,12 +4,15 @@ import { Button, FormGroup, TextField, Typography } from '@material-ui/core'
 
 import { Modal } from 'components'
 import { useFieldControl } from 'hooks'
+import useStyles from './style'
 
 const TaskControlModal = ({ onSubmit, initial, open, ...props }) => {
   const [title, titleError, onTitleChange, setTitleError] = useFieldControl(initial.title)
   const [description, descriptionError, onDescriptionChange, setDescriptionError] = useFieldControl(
     initial.description,
   )
+
+  const classes = useStyles()
 
   useEffect(() => {
     onTitleChange(initial.title)
@@ -29,29 +32,33 @@ const TaskControlModal = ({ onSubmit, initial, open, ...props }) => {
   return (
     <Modal open={open} {...props}>
       <Typography variant="h6">{initial.title ? 'Edit' : 'Create'} task</Typography>
-      <FormGroup>
-        <TextField
-          error={!!titleError}
-          helperText={titleError}
-          value={title}
-          onChange={onTitleChange}
-          margin="normal"
-          required
-          label="Title"
-          variant="outlined"
-        />
-        <TextField
-          error={!!descriptionError}
-          helperText={descriptionError}
-          value={description}
-          onChange={onDescriptionChange}
-          margin="normal"
-          required
-          label="Description"
-          variant="outlined"
-        />
-      </FormGroup>
-      <Button onClick={onValidate}>{initial.title ? 'Save' : 'Create'}</Button>
+      <div className={classes.body}>
+        <FormGroup>
+          <TextField
+            error={!!titleError}
+            helperText={titleError}
+            value={title}
+            onChange={onTitleChange}
+            margin="normal"
+            required
+            label="Title"
+            variant="outlined"
+          />
+          <TextField
+            error={!!descriptionError}
+            helperText={descriptionError}
+            value={description}
+            onChange={onDescriptionChange}
+            margin="normal"
+            required
+            label="Description"
+            variant="outlined"
+          />
+        </FormGroup>
+      </div>
+      <Button size="large" onClick={onValidate} variant="outlined" color="secondary">
+        {initial.title ? 'Save' : 'Create'}
+      </Button>
     </Modal>
   )
 }

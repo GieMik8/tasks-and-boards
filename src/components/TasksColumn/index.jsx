@@ -5,8 +5,10 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { List } from 'immutable'
 import { Link, useParams, useHistory } from 'react-router-dom'
-import { Typography, Button } from '@material-ui/core'
+import { Button } from '@material-ui/core'
+import EditIcon from '@material-ui/icons/Edit'
 import QueryString from 'query-string'
+import AddIcon from '@material-ui/icons/Add'
 
 import { deleteTask } from 'modules/app'
 import { Task } from 'components'
@@ -46,12 +48,15 @@ const TasksColumn = ({ id, onCreateTask }) => {
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
-          className={clsx(classes.root, { hovered: snapshot.isDraggingOver })}
+          className={clsx(classes.root, { 'dragged-over': snapshot.isDraggingOver })}
           {...provided.droppableProps}
         >
-          <Link to={editColumnLink}>
-            <Typography variant="h6">{column.get('title')}</Typography>
-          </Link>
+          <div className={classes.header}>
+            <Link className={classes.title} to={editColumnLink}>
+              {column.get('title')}
+              <EditIcon style={{ fontSize: 14, marginLeft: 5 }} />
+            </Link>
+          </div>
           {provided.placeholder}
           {tasks.map((taskId, index) => {
             const task = tasksById.get(taskId)
@@ -73,7 +78,18 @@ const TasksColumn = ({ id, onCreateTask }) => {
               />
             )
           })}
-          <Button onClick={onCreateTask}>Create task</Button>
+          <div className={classes.addButtonWrapper}>
+            <Button
+              size="large"
+              fullWidth
+              onClick={onCreateTask}
+              variant="outlined"
+              color="secondary"
+              startIcon={<AddIcon />}
+            >
+              Create task
+            </Button>
+          </div>
         </div>
       )}
     </Droppable>

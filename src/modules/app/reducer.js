@@ -19,8 +19,6 @@ const initialState = Map({
   boards: List(),
   columnsByBoardId: Map(),
   tasksByColumnId: Map(),
-  // columns: List(),
-  // tasks: List(),
 })
 
 const appReducer = handleActions(

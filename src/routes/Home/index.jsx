@@ -12,7 +12,7 @@ export default () => {
   return (
     <div className={classes.root}>
       <Typography variant="h5">Boards</Typography>
-      <List component="nav" className={classes.root} aria-label="contacts">
+      <List component="nav" className={classes.list} aria-label="contacts">
         {boardsList.map(board => (
           <Link key={board} to={`/boards/${board}`}>
             <ListItem button>

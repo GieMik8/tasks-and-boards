@@ -1,10 +1,8 @@
 import { makeStyles } from '@material-ui/core'
 
 export default makeStyles({
-  root: {
-    // backgroundColor: 'red',
-  },
+  root: {},
   wrapper: {
-    // backgroundColor: 'yellow',
+    marginTop: '20px',
   },
 })

@@ -2,8 +2,8 @@ import React, { useCallback, useState } from 'react'
 import { useParams, useHistory } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { DragDropContext } from 'react-beautiful-dnd'
-import { Typography, Button } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
+import { Typography } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import uuid from 'uuid'
 
 import {
@@ -30,7 +30,7 @@ export default () => {
   const columnsList = useSelector(state => state.app.getIn(['columnsByBoardId', params.boardId]))
   const board = useSelector(state => state.app.getIn(['entities', 'boards', params.boardId]))
 
-  const openCreateModal = useCallback(() => setCreatingColumn(true), [])
+  const openCreatingColumnModal = useCallback(() => setCreatingColumn(true), [])
 
   const closeModals = useCallback(() => {
     setCreatingTaskInColumn(false)
@@ -116,10 +116,12 @@ export default () => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5">Board: {board.get('title')}</Typography>
+      <Typography variant="h5">
+        <Link to="/">Home</Link> / Board: {board.get('title')}
+      </Typography>
       <div className={classes.wrapper}>
         <DragDropContext onDragEnd={onDrag}>
-          <TasksColumns>
+          <TasksColumns onCreateColumn={openCreatingColumnModal}>
             {columnsList.map(columnId => (
               <TasksColumn
                 onCreateTask={() => setCreatingTaskInColumn(columnId)}
@@ -127,9 +129,6 @@ export default () => {
                 id={columnId}
               />
             ))}
-            <Button onClick={openCreateModal} variant="outlined" color="secondary">
-              <AddIcon />
-            </Button>
           </TasksColumns>
         </DragDropContext>
         <ColumnControlModal open={creatingColumn} onSubmit={createColumn} onClose={closeModals} />

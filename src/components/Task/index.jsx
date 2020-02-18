@@ -1,7 +1,9 @@
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import PropTypes from 'prop-types'
-import { Typography, Button } from '@material-ui/core'
+import { Typography, IconButton } from '@material-ui/core'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 import useStyles from './style'
 
@@ -17,10 +19,18 @@ const Task = ({ id, title, description, index, onEdit, onDelete }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <Typography variant="h6">{title}</Typography>
-          <Typography>{description}</Typography>
-          <Button onClick={onEdit}>Edit</Button>
-          <Button onClick={onDelete}>Delete</Button>
+          <div className={classes.body}>
+            <Typography variant="subtitle1">{title}</Typography>
+            <Typography variant="subtitle2">{description}</Typography>
+          </div>
+          <div className={classes.footer}>
+            <IconButton size="small" onClick={onEdit} color="secondary" aria-label="Edit">
+              <EditIcon fontSize="small" />
+            </IconButton>
+            <IconButton size="small" onClick={onDelete} aria-label="Delete">
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </div>
         </div>
       )}
     </Draggable>

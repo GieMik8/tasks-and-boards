@@ -1,12 +1,12 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { of, empty } from 'rxjs'
+import { of } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 import { normalize } from 'normalizr'
 
 import { boards, columns, tasks } from 'mock'
 import { task, board, column } from 'mock/schemas'
 import { getGroupedByParameter } from 'utils'
-import { startApp, appStarted, fetchData, fetchDataSuccess, moveTask } from './actions'
+import { startApp, appStarted, fetchData, fetchDataSuccess } from './actions'
 
 const initEpic = action$ =>
   action$.pipe(
@@ -32,13 +32,4 @@ const fetchDataEpic = action$ =>
     }),
   )
 
-const moveTaskEpic = action$ =>
-  action$.pipe(
-    ofType(moveTask.toString()),
-    switchMap(({ payload }) => {
-      console.log({ payload })
-      return empty()
-    }),
-  )
-
-export default combineEpics(initEpic, fetchDataEpic, moveTaskEpic)
+export default combineEpics(initEpic, fetchDataEpic)

@@ -12,7 +12,7 @@ export default createMuiTheme({
       main: colors.secondary,
     },
     background: {
-      default: colors.light,
+      default: colors.gray1,
     },
   },
 })
