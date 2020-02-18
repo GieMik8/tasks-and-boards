@@ -54,13 +54,12 @@ const appReducer = handleActions(
       }
       return state.setIn(['tasksByColumnId', payload.columnId], tasks)
     },
-    [createColumn]: (state, { payload }) =>
-      state
+    [createColumn]: (state, { payload }) => {
+      const targetColumnsList = state.getIn(['columnsByBoardId', payload.boardId]) || List()
+      return state
         .setIn(['entities', 'columns', payload.id], fromJS(payload))
-        .setIn(
-          ['columnsByBoardId', payload.boardId],
-          state.getIn(['columnsByBoardId', payload.boardId]).push(payload.id),
-        ),
+        .setIn(['columnsByBoardId', payload.boardId], targetColumnsList.push(payload.id))
+    },
     [editColumn]: (state, { payload }) =>
       state.setIn(['entities', 'columns', payload.id, 'title'], payload.title),
     [editTask]: (state, { payload }) => {

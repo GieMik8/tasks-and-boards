@@ -14,4 +14,9 @@ export default makeStyles(theme => ({
     padding: '10px 0',
     minHeight: '100%',
   },
+  addButtonWrapper: {
+    padding: '0 10px',
+    minHeight: '100%',
+    display: 'flex',
+  },
 }))

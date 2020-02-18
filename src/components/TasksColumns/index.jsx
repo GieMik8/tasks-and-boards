@@ -11,9 +11,11 @@ const TasksColumns = ({ children, onCreateColumn }) => {
     <div className={classes.root}>
       <div className={classes.inner}>
         {children}
-        <Button onClick={onCreateColumn} variant="outlined" color="secondary">
-          <AddIcon />
-        </Button>
+        <div className={classes.addButtonWrapper}>
+          <Button onClick={onCreateColumn} variant="outlined" color="secondary">
+            <AddIcon />
+          </Button>
+        </div>
       </div>
     </div>
   )

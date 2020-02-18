@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useParams, useHistory } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { DragDropContext } from 'react-beautiful-dnd'
+import { List } from 'immutable'
 import { Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import uuid from 'uuid'
@@ -27,7 +28,8 @@ export default () => {
   const [creatingColumn, setCreatingColumn] = useState(false)
   const [creatingTaskInColumn, setCreatingTaskInColumn] = useState(false)
 
-  const columnsList = useSelector(state => state.app.getIn(['columnsByBoardId', params.boardId]))
+  const columnsList =
+    useSelector(state => state.app.getIn(['columnsByBoardId', params.boardId])) || List()
   const board = useSelector(state => state.app.getIn(['entities', 'boards', params.boardId]))
 
   const openCreatingColumnModal = useCallback(() => setCreatingColumn(true), [])
