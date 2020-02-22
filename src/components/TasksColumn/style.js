@@ -12,8 +12,7 @@ export default makeStyles(theme => ({
     },
   },
   header: {
-    marginBottom: '6px',
-    padding: '10px 20px',
+    padding: '10px 6px',
   },
   title: {
     textDecoration: 'none',

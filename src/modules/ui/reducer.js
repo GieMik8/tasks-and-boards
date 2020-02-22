@@ -17,7 +17,7 @@ const uiReducer = handleActions(
   {
     [openModal]: (state, { payload }) => {
       let targetModal = state.getIn(['modals', payload.target])
-      targetModal = targetModal.set('open', true).set('params', payload.params || null)
+      targetModal = targetModal.set('open', true).set('params', fromJS(payload.params) || null)
       return state.setIn(['modals', payload.target], targetModal)
     },
     [closeModal]: (state, { payload }) => {

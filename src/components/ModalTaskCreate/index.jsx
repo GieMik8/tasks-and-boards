@@ -12,7 +12,9 @@ import FormTask from '../FormTask'
 const ModalTaskCreate = () => {
   const dispatch = useDispatch()
   const open = useSelector(state => state.ui.getIn(['modals', modalType.TASK_CREATE, 'open']))
-  const params = useSelector(state => state.ui.getIn(['modals', modalType.TASK_CREATE, 'params']))
+  const columnId = useSelector(state =>
+    state.ui.getIn(['modals', modalType.TASK_CREATE, 'params', 'columnId']),
+  )
 
   const closeModal = useCallback(() => {
     dispatch(closeModalAction(modalType.TASK_CREATE))
@@ -25,12 +27,12 @@ const ModalTaskCreate = () => {
           title: data.title,
           description: data.description,
           id: uuid(),
-          columnId: params.columnId,
+          columnId,
         }),
       )
       dispatch(closeModalAction(modalType.TASK_CREATE))
     },
-    [dispatch, params],
+    [dispatch, columnId],
   )
 
   return (

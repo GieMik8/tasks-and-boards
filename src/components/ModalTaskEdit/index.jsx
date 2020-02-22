@@ -11,7 +11,10 @@ import FormTask from '../FormTask'
 const ModalTaskEdit = () => {
   const dispatch = useDispatch()
   const open = useSelector(state => state.ui.getIn(['modals', modalType.TASK_EDIT, 'open']))
-  const task = useSelector(state => state.ui.getIn(['modals', modalType.TASK_EDIT, 'params']))
+  const taskId = useSelector(state =>
+    state.ui.getIn(['modals', modalType.TASK_EDIT, 'params', 'id']),
+  )
+  const task = useSelector(state => state.app.getIn(['entities', 'tasks', taskId]))
 
   const closeModal = useCallback(() => {
     dispatch(closeModalAction(modalType.TASK_EDIT))

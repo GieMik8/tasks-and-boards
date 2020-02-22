@@ -11,7 +11,8 @@ import FormColumn from '../FormColumn'
 const ModalColumnEdit = () => {
   const dispatch = useDispatch()
   const open = useSelector(state => state.ui.getIn(['modals', modalType.COLUMN_EDIT, 'open']))
-  const params = useSelector(state => state.ui.getIn(['modals', modalType.COLUMN_EDIT, 'params']))
+  const id = useSelector(state => state.ui.getIn(['modals', modalType.COLUMN_EDIT, 'params', 'id']))
+  const column = useSelector(state => state.app.getIn(['entities', 'columns', id]))
 
   const closeModal = useCallback(() => {
     dispatch(closeModalAction(modalType.COLUMN_EDIT))
@@ -19,16 +20,16 @@ const ModalColumnEdit = () => {
 
   const submit = useCallback(
     data => {
-      dispatch(editColumn({ title: data.title, id: params.get('id') }))
+      dispatch(editColumn({ title: data.title, id }))
       dispatch(closeModalAction(modalType.COLUMN_EDIT))
     },
-    [dispatch, params],
+    [dispatch, id],
   )
 
   return (
     <Modal open={open} onClose={closeModal}>
       <Typography variant="h6">Edit column</Typography>
-      <FormColumn initial={params} onSubmit={submit} buttonText="Save" />
+      <FormColumn initial={column} onSubmit={submit} buttonText="Save" />
     </Modal>
   )
 }

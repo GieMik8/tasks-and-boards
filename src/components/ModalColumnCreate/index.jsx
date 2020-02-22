@@ -12,7 +12,9 @@ import FormColumn from '../FormColumn'
 const ModalColumnCreate = () => {
   const dispatch = useDispatch()
   const open = useSelector(state => state.ui.getIn(['modals', modalType.COLUMN_CREATE, 'open']))
-  const params = useSelector(state => state.ui.getIn(['modals', modalType.COLUMN_CREATE, 'params']))
+  const boardId = useSelector(state =>
+    state.ui.getIn(['modals', modalType.COLUMN_CREATE, 'params', 'boardId']),
+  )
 
   const closeModal = useCallback(() => {
     dispatch(closeModalAction(modalType.COLUMN_CREATE))
@@ -20,10 +22,10 @@ const ModalColumnCreate = () => {
 
   const submit = useCallback(
     data => {
-      dispatch(createColumn({ title: data.title, id: uuid(), boardId: params.boardId }))
+      dispatch(createColumn({ title: data.title, id: uuid(), boardId }))
       dispatch(closeModalAction(modalType.COLUMN_CREATE))
     },
-    [dispatch, params],
+    [dispatch, boardId],
   )
 
   return (

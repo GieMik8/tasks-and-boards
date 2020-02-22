@@ -22,12 +22,12 @@ const TasksColumn = ({ id, onCreateTask }) => {
   const column = useSelector(state => state.app.getIn(['entities', 'columns', id]))
 
   const editColumn = useCallback(
-    () => dispatch(openModal({ target: modalType.COLUMN_EDIT, params: column })),
+    () => dispatch(openModal({ target: modalType.COLUMN_EDIT, params: { id: column.get('id') } })),
     [dispatch, column],
   )
 
   const editTask = useCallback(
-    task => dispatch(openModal({ target: modalType.TASK_EDIT, params: task })),
+    task => dispatch(openModal({ target: modalType.TASK_EDIT, params: { id: task.get('id') } })),
     [dispatch],
   )
 
