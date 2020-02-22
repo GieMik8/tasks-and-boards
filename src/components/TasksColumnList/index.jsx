@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core'
 
 import useStyles from './style'
 
-const TasksColumns = ({ children, onCreateColumn }) => {
+const TasksColumnList = ({ children, onCreateColumn }) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
@@ -21,14 +21,14 @@ const TasksColumns = ({ children, onCreateColumn }) => {
   )
 }
 
-TasksColumns.propTypes = {
+TasksColumnList.propTypes = {
   children: PropTypes.any,
   onCreateColumn: PropTypes.func,
 }
 
-TasksColumns.defaultProps = {
+TasksColumnList.defaultProps = {
   children: null,
   onCreateColumn: () => {},
 }
 
-export default TasksColumns
+export default TasksColumnList

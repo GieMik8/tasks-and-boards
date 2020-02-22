@@ -1,47 +1,39 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { Droppable } from 'react-beautiful-dnd'
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { List } from 'immutable'
-import { Link, useParams, useHistory } from 'react-router-dom'
 import { Button } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
-import QueryString from 'query-string'
 import AddIcon from '@material-ui/icons/Add'
 
-import { deleteTask } from 'modules/app'
+import { deleteTask as deleteTaskAction } from 'modules/app'
+import { openModal } from 'modules/ui'
 import { Task } from 'components'
+import { modalType } from 'types'
 import useStyles from './style'
 
 const TasksColumn = ({ id, onCreateTask }) => {
   const classes = useStyles()
-  const { boardId } = useParams()
-  const history = useHistory()
   const dispatch = useDispatch()
   const tasks = useSelector(state => state.app.getIn(['tasksByColumnId', id]) || List())
   const tasksById = useSelector(state => state.app.getIn(['entities', 'tasks']))
   const column = useSelector(state => state.app.getIn(['entities', 'columns', id]))
 
-  const editColumnLink = useMemo(
-    () => `/boards/${boardId}?${QueryString.stringify({ column: id, title: column.get('title') })}`,
-    [boardId, id, column],
+  const editColumn = useCallback(
+    () => dispatch(openModal({ target: modalType.COLUMN_EDIT, params: column })),
+    [dispatch, column],
   )
 
-  const onEditTask = useCallback(
-    ({ title, description, id: taskId }) => {
-      history.replace(
-        `/boards/${boardId}?${QueryString.stringify({
-          task: taskId,
-          title,
-          description,
-        })}`,
-      )
-    },
-    [history, boardId],
+  const editTask = useCallback(
+    task => dispatch(openModal({ target: modalType.TASK_EDIT, params: task })),
+    [dispatch],
   )
 
-  const onDeleteTask = useCallback(taskId => dispatch(deleteTask(taskId)), [dispatch])
+  const deleteTask = useCallback(taskId => dispatch(deleteTaskAction(taskId)), [dispatch])
+
+  const createTask = useCallback(() => onCreateTask(id), [id, onCreateTask])
 
   return (
     <Droppable droppableId={id}>
@@ -52,10 +44,10 @@ const TasksColumn = ({ id, onCreateTask }) => {
           {...provided.droppableProps}
         >
           <div className={classes.header}>
-            <Link className={classes.title} to={editColumnLink}>
+            <Button className={classes.title} onClick={editColumn}>
               {column.get('title')}
               <EditIcon style={{ fontSize: 14, marginLeft: 5 }} />
-            </Link>
+            </Button>
           </div>
           {provided.placeholder}
           {tasks.map((taskId, index) => {
@@ -67,14 +59,8 @@ const TasksColumn = ({ id, onCreateTask }) => {
                 title={task.get('title')}
                 index={index}
                 id={taskId}
-                onEdit={() =>
-                  onEditTask({
-                    id: taskId,
-                    title: task.get('title'),
-                    description: task.get('description'),
-                  })
-                }
-                onDelete={() => onDeleteTask(taskId)}
+                onEdit={() => editTask(task)}
+                onDelete={() => deleteTask(taskId)}
               />
             )
           })}
@@ -82,7 +68,7 @@ const TasksColumn = ({ id, onCreateTask }) => {
             <Button
               size="large"
               fullWidth
-              onClick={onCreateTask}
+              onClick={createTask}
               variant="outlined"
               color="secondary"
               startIcon={<AddIcon />}

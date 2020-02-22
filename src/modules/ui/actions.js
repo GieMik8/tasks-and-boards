@@ -1,5 +1,7 @@
 import { createAction } from 'redux-actions'
 
-export const TEST = 'ui/TEST'
+export const OPEN_MODAL = 'ui/OPEN_MODAL'
+export const CLOSE_MODAL = 'ui/CLOSE_MODAL'
 
-export const test = createAction(TEST)
+export const openModal = createAction(OPEN_MODAL)
+export const closeModal = createAction(CLOSE_MODAL)

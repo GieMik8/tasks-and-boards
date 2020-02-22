@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions'
-import { Map, List, fromJS } from 'immutable'
+import { List, fromJS } from 'immutable'
 
 import {
   appStarted,
@@ -13,12 +13,12 @@ import {
   deleteTask,
 } from './actions'
 
-const initialState = Map({
+const initialState = fromJS({
   isReady: false,
-  entities: Map(),
-  boards: List(),
-  columnsByBoardId: Map(),
-  tasksByColumnId: Map(),
+  entities: {},
+  boards: [],
+  columnsByBoardId: {},
+  tasksByColumnId: {},
 })
 
 const appReducer = handleActions(

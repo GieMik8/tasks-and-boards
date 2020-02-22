@@ -7,7 +7,7 @@ import useStyles from './style'
 
 export default () => {
   const classes = useStyles()
-
+  console.log('AppContainer')
   return (
     <Container className={classes.root}>
       <Switch>
