@@ -50,4 +50,4 @@ const Board2 = () => {
   )
 }
 
-export default React.memo(Board2)
+export default Board2
