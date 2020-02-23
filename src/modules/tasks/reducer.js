@@ -31,7 +31,7 @@ const appReducer = handleActions(
       const sourceTasksList = state.getIn(['tasksByColumnId', payload.from.columnId])
       const destinationTasksList = state.getIn(['tasksByColumnId', payload.to.columnId]) || List()
       return state
-        .setIn(['entities', 'tasks', payload.taskId, 'columnId'], payload.to)
+        .setIn(['entities', 'tasks', payload.taskId, 'columnId'], payload.to.columnId)
         .setIn(
           ['tasksByColumnId', payload.from.columnId],
           sourceTasksList.delete(payload.from.index),
