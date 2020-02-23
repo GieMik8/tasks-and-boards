@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router'
+import { Route, Switch, Redirect } from 'react-router'
 import { Container } from '@material-ui/core'
 
 import { Home, Board } from 'routes'
@@ -13,6 +13,7 @@ export default () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/boards/:boardId" component={Board} />
+        <Redirect to="/" />
       </Switch>
     </Container>
   )

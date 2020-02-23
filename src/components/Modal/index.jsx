@@ -8,6 +8,7 @@ import useStyles from './style'
 
 const Modal = ({ open, onClose, children }) => {
   const classes = useStyles()
+
   return (
     <MaterialModal
       aria-labelledby="transition-modal-title"

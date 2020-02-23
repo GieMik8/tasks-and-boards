@@ -5,6 +5,11 @@ export default makeStyles(theme => ({
     backgroundColor: theme.colors.white,
     margin: '0 6px 6px',
     padding: '8px 12px',
+    transition: '.2s ease',
+
+    '&:hover': {
+      backgroundColor: theme.colors.gray1,
+    },
   },
   body: {
     marginBottom: '10px',
