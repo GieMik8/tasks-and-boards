@@ -1,14 +1,14 @@
 import { createAction } from 'redux-actions'
 import { createActionSet } from 'utils'
 
-export const MOVE_TASK = 'app/MOVE_TASK'
-export const REORDER_TASK = 'app/REORDER_TASK'
-export const CREATE_COLUMN = 'app/CREATE_COLUMN'
-export const EDIT_COLUMN = 'app/EDIT_COLUMN'
-export const CREATE_TASK = 'app/CREATE_TASK'
-export const EDIT_TASK = 'app/EDIT_TASK'
-export const DELETE_TASK = 'app/DELETE_TASK'
-export const FETCH_DATA = createActionSet('app/FETCH_DATA')
+export const MOVE_TASK = 'tasks/MOVE_TASK'
+export const REORDER_TASK = 'tasks/REORDER_TASK'
+export const CREATE_COLUMN = 'tasks/CREATE_COLUMN'
+export const EDIT_COLUMN = 'tasks/EDIT_COLUMN'
+export const CREATE_TASK = 'tasks/CREATE_TASK'
+export const EDIT_TASK = 'tasks/EDIT_TASK'
+export const DELETE_TASK = 'tasks/DELETE_TASK'
+export const FETCH_DATA = createActionSet('tasks/FETCH_DATA')
 
 export const moveTask = createAction(MOVE_TASK)
 export const reorderTask = createAction(REORDER_TASK)

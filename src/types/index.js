@@ -4,3 +4,5 @@ export const modalType = {
   TASK_CREATE: 'taskCreate',
   TASK_EDIT: 'taskEdit',
 }
+
+export const LOCALSTORAGE_KEY_TASKS = 'tasks_state'
