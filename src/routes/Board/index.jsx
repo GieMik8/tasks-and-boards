@@ -20,7 +20,7 @@ const Board2 = () => {
   const { boardId } = useParams()
   const { selectedTask, selectedColumn } = useQuery()
 
-  const board = useSelector(state => state.app.getIn(['entities', 'boards', boardId]))
+  const board = useSelector(state => state.tasks.getIn(['entities', 'boards', boardId]))
 
   useEffect(() => {
     if (selectedColumn) {

@@ -7,6 +7,7 @@ import useStyles from './style'
 
 const TasksColumnList = ({ children, onCreateColumn }) => {
   const classes = useStyles()
+
   return (
     <div className={classes.root}>
       <div className={classes.inner}>

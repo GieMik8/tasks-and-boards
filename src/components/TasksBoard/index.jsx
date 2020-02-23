@@ -4,8 +4,8 @@ import { DragDropContext } from 'react-beautiful-dnd'
 import { List } from 'immutable'
 import PropTypes from 'prop-types'
 
-import { moveTask, reorderTask } from 'modules/app'
 import { TasksColumnList, TasksColumn } from 'components'
+import { moveTask, reorderTask } from 'modules/tasks'
 import { openModal } from 'modules/ui'
 import { modalType } from 'types'
 import useStyles from './style'
@@ -14,7 +14,8 @@ const TasksBoard = ({ boardId }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
 
-  const columnsList = useSelector(state => state.app.getIn(['columnsByBoardId', boardId])) || List()
+  const columnsList =
+    useSelector(state => state.tasks.getIn(['columnsByBoardId', boardId])) || List()
 
   const onDrag = useCallback(
     dragging => {

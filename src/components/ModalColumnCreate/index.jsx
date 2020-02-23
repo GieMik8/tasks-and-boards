@@ -4,10 +4,9 @@ import { Typography } from '@material-ui/core'
 import uuid from 'uuid'
 
 import { closeModal as closeModalAction } from 'modules/ui'
-import { createColumn } from 'modules/app'
-import { Modal } from 'components'
+import { createColumn } from 'modules/tasks'
+import { Modal, FormColumn } from 'components'
 import { modalType } from 'types'
-import FormColumn from '../FormColumn'
 
 const ModalColumnCreate = () => {
   const dispatch = useDispatch()

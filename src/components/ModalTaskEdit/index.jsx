@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Typography } from '@material-ui/core'
 
 import { closeModal as closeModalAction } from 'modules/ui'
-import { editTask } from 'modules/app'
-import { Modal } from 'components'
+import { editTask } from 'modules/tasks'
+import { Modal, FormTask } from 'components'
 import { modalType } from 'types'
-import FormTask from '../FormTask'
 
 const ModalTaskEdit = () => {
   const dispatch = useDispatch()
@@ -14,7 +13,7 @@ const ModalTaskEdit = () => {
   const taskId = useSelector(state =>
     state.ui.getIn(['modals', modalType.TASK_EDIT, 'params', 'id']),
   )
-  const task = useSelector(state => state.app.getIn(['entities', 'tasks', taskId]))
+  const task = useSelector(state => state.tasks.getIn(['entities', 'tasks', taskId]))
 
   const closeModal = useCallback(() => {
     dispatch(closeModalAction(modalType.TASK_EDIT))

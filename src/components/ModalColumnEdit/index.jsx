@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Typography } from '@material-ui/core'
 
 import { closeModal as closeModalAction } from 'modules/ui'
-import { editColumn } from 'modules/app'
+import { editColumn } from 'modules/tasks'
 import { Modal } from 'components'
 import { modalType } from 'types'
 import FormColumn from '../FormColumn'
@@ -12,7 +12,7 @@ const ModalColumnEdit = () => {
   const dispatch = useDispatch()
   const open = useSelector(state => state.ui.getIn(['modals', modalType.COLUMN_EDIT, 'open']))
   const id = useSelector(state => state.ui.getIn(['modals', modalType.COLUMN_EDIT, 'params', 'id']))
-  const column = useSelector(state => state.app.getIn(['entities', 'columns', id]))
+  const column = useSelector(state => state.tasks.getIn(['entities', 'columns', id]))
 
   const closeModal = useCallback(() => {
     dispatch(closeModalAction(modalType.COLUMN_EDIT))

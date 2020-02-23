@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core'
 import uuid from 'uuid'
 
 import { closeModal as closeModalAction } from 'modules/ui'
-import { createTask } from 'modules/app'
+import { createTask } from 'modules/tasks'
 import { Modal } from 'components'
 import { modalType } from 'types'
 import FormTask from '../FormTask'

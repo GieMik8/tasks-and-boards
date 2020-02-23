@@ -7,8 +7,9 @@ import useStyles from './style'
 
 export default () => {
   const classes = useStyles()
-  const boardsList = useSelector(state => state.app.get('boards'))
-  const boardsById = useSelector(state => state.app.getIn(['entities', 'boards']))
+  const boardsList = useSelector(state => state.tasks.get('boards'))
+  const boardsById = useSelector(state => state.tasks.getIn(['entities', 'boards']))
+
   return (
     <div className={classes.root}>
       <Typography variant="h5">Boards</Typography>

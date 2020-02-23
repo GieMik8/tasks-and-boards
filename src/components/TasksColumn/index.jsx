@@ -8,7 +8,7 @@ import { Button } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import AddIcon from '@material-ui/icons/Add'
 
-import { deleteTask as deleteTaskAction } from 'modules/app'
+import { deleteTask as deleteTaskAction } from 'modules/tasks'
 import { openModal } from 'modules/ui'
 import { Task } from 'components'
 import { modalType } from 'types'
@@ -17,9 +17,9 @@ import useStyles from './style'
 const TasksColumn = ({ id, onCreateTask }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const tasks = useSelector(state => state.app.getIn(['tasksByColumnId', id]) || List())
-  const tasksById = useSelector(state => state.app.getIn(['entities', 'tasks']))
-  const column = useSelector(state => state.app.getIn(['entities', 'columns', id]))
+  const tasks = useSelector(state => state.tasks.getIn(['tasksByColumnId', id]) || List())
+  const tasksById = useSelector(state => state.tasks.getIn(['entities', 'tasks']))
+  const column = useSelector(state => state.tasks.getIn(['entities', 'columns', id]))
 
   const editColumn = useCallback(
     () => dispatch(openModal({ target: modalType.COLUMN_EDIT, params: { id: column.get('id') } })),
