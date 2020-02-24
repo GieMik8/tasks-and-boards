@@ -17,7 +17,7 @@ const FormColumn = ({ onSubmit, initial, buttonText }) => {
 
   const validate = () => {
     if (!title) {
-      return setTitleError('Title is not defined')
+      return setTitleError('Title is required')
     }
     return onSubmit({ title })
   }

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, batch } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import uuid from 'uuid'
 
@@ -21,8 +21,10 @@ const ModalColumnCreate = () => {
 
   const submit = useCallback(
     data => {
-      dispatch(createColumn({ title: data.title, id: uuid(), boardId }))
-      dispatch(closeModalAction(modalType.COLUMN_CREATE))
+      batch(() => {
+        dispatch(createColumn({ title: data.title, id: uuid(), boardId }))
+        dispatch(closeModalAction(modalType.COLUMN_CREATE))
+      })
     },
     [dispatch, boardId],
   )

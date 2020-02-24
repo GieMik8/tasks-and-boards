@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core'
 
 import useStyles from './style'
 
-const TasksColumnList = ({ children, onCreateColumn }) => {
+const TasksColumnsWrapper = ({ children, onCreateColumn }) => {
   const classes = useStyles()
 
   return (
@@ -22,14 +22,14 @@ const TasksColumnList = ({ children, onCreateColumn }) => {
   )
 }
 
-TasksColumnList.propTypes = {
+TasksColumnsWrapper.propTypes = {
   children: PropTypes.any,
   onCreateColumn: PropTypes.func,
 }
 
-TasksColumnList.defaultProps = {
+TasksColumnsWrapper.defaultProps = {
   children: null,
   onCreateColumn: () => {},
 }
 
-export default TasksColumnList
+export default TasksColumnsWrapper

@@ -6,7 +6,7 @@ import Fade from '@material-ui/core/Fade'
 
 import useStyles from './style'
 
-const Modal = ({ open, onClose, children }) => {
+const Modal = ({ open, onClose, children, ...other }) => {
   const classes = useStyles()
 
   return (
@@ -21,6 +21,7 @@ const Modal = ({ open, onClose, children }) => {
       BackdropProps={{
         timeout: 500,
       }}
+      {...other}
     >
       <Fade in={open}>
         <div className={classes.paper}>{children}</div>

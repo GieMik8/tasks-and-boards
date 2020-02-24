@@ -8,30 +8,23 @@ import { Button } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import AddIcon from '@material-ui/icons/Add'
 
-import { deleteTask as deleteTaskAction } from 'modules/tasks'
 import { openModal } from 'modules/ui'
 import { Task } from 'components'
 import { modalType } from 'types'
 import useStyles from './style'
 
+const emptyList = List()
+
 const TasksColumn = ({ id, onCreateTask }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const tasks = useSelector(state => state.tasks.getIn(['tasksByColumnId', id]) || List())
-  const tasksById = useSelector(state => state.tasks.getIn(['entities', 'tasks']))
+  const tasksList = useSelector(state => state.tasks.getIn(['tasksByColumnId', id]) || emptyList)
   const column = useSelector(state => state.tasks.getIn(['entities', 'columns', id]))
 
   const editColumn = useCallback(
-    () => dispatch(openModal({ target: modalType.COLUMN_EDIT, params: { id: column.get('id') } })),
-    [dispatch, column],
+    () => dispatch(openModal({ target: modalType.COLUMN_EDIT, params: { id } })),
+    [dispatch, id],
   )
-
-  const editTask = useCallback(
-    task => dispatch(openModal({ target: modalType.TASK_EDIT, params: { id: task.get('id') } })),
-    [dispatch],
-  )
-
-  const deleteTask = useCallback(taskId => dispatch(deleteTaskAction(taskId)), [dispatch])
 
   const createTask = useCallback(() => onCreateTask(id), [id, onCreateTask])
 
@@ -50,20 +43,9 @@ const TasksColumn = ({ id, onCreateTask }) => {
             </Button>
           </div>
           {provided.placeholder}
-          {tasks.map((taskId, index) => {
-            const task = tasksById.get(taskId)
-            return (
-              <Task
-                key={taskId}
-                description={task.get('description')}
-                title={task.get('title')}
-                index={index}
-                id={taskId}
-                onEdit={() => editTask(task)}
-                onDelete={() => deleteTask(taskId)}
-              />
-            )
-          })}
+          {tasksList.map((taskId, index) => (
+            <Task key={taskId} index={index} id={taskId} />
+          ))}
           <div className={classes.addButtonWrapper}>
             <Button
               size="large"

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, batch } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import uuid from 'uuid'
 
@@ -22,15 +22,17 @@ const ModalTaskCreate = () => {
 
   const submit = useCallback(
     data => {
-      dispatch(
-        createTask({
-          title: data.title,
-          description: data.description,
-          id: uuid(),
-          columnId,
-        }),
-      )
-      dispatch(closeModalAction(modalType.TASK_CREATE))
+      batch(() => {
+        dispatch(
+          createTask({
+            title: data.title,
+            description: data.description,
+            id: uuid(),
+            columnId,
+          }),
+        )
+        dispatch(closeModalAction(modalType.TASK_CREATE))
+      })
     },
     [dispatch, columnId],
   )

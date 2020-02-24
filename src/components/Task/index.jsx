@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Draggable } from 'react-beautiful-dnd'
 import PropTypes from 'prop-types'
 import { Typography, IconButton } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 
+import { openModal } from 'modules/ui'
+import { deleteTask as deleteTaskAction } from 'modules/tasks'
+import { modalType } from 'types'
 import useStyles from './style'
 
-const Task = ({ id, title, description, index, onEdit, onDelete }) => {
+const Task = ({ id, index }) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const task = useSelector(state => state.tasks.getIn(['entities', 'tasks', id]))
+
+  const editTask = useCallback(
+    () => dispatch(openModal({ target: modalType.TASK_EDIT, params: { id } })),
+    [dispatch, id],
+  )
+
+  const deleteTask = useCallback(() => dispatch(deleteTaskAction(id)), [dispatch, id])
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -20,14 +33,14 @@ const Task = ({ id, title, description, index, onEdit, onDelete }) => {
           {...provided.dragHandleProps}
         >
           <div className={classes.body}>
-            <Typography variant="subtitle1">{title}</Typography>
-            <Typography variant="subtitle2">{description}</Typography>
+            <Typography variant="subtitle1">{task.get('title')}</Typography>
+            <Typography variant="subtitle2">{task.get('description')}</Typography>
           </div>
           <div className={classes.footer}>
-            <IconButton size="small" onClick={onEdit} color="secondary" aria-label="Edit">
+            <IconButton size="small" onClick={editTask} color="secondary" aria-label="Edit">
               <EditIcon fontSize="small" />
             </IconButton>
-            <IconButton size="small" onClick={onDelete} aria-label="Delete">
+            <IconButton size="small" onClick={deleteTask} aria-label="Delete">
               <DeleteIcon fontSize="small" />
             </IconButton>
           </div>
@@ -39,16 +52,7 @@ const Task = ({ id, title, description, index, onEdit, onDelete }) => {
 
 Task.propTypes = {
   id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired,
-  onEdit: PropTypes.func,
-  onDelete: PropTypes.func,
-}
-
-Task.defaultProps = {
-  onEdit: () => {},
-  onDelete: () => {},
 }
 
 export default Task

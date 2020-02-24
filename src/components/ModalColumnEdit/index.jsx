@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, batch } from 'react-redux'
 import { Typography } from '@material-ui/core'
 
 import { closeModal as closeModalAction } from 'modules/ui'
@@ -20,8 +20,10 @@ const ModalColumnEdit = () => {
 
   const submit = useCallback(
     data => {
-      dispatch(editColumn({ title: data.title, id }))
-      dispatch(closeModalAction(modalType.COLUMN_EDIT))
+      batch(() => {
+        dispatch(editColumn({ title: data.title, id }))
+        dispatch(closeModalAction(modalType.COLUMN_EDIT))
+      })
     },
     [dispatch, id],
   )

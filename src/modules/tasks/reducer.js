@@ -19,7 +19,7 @@ const initialState = fromJS({
   tasksByColumnId: {},
 })
 
-const appReducer = handleActions(
+const tasksReducer = handleActions(
   {
     [fetchDataSuccess]: (state, { payload }) =>
       state
@@ -87,4 +87,4 @@ const appReducer = handleActions(
   initialState,
 )
 
-export default appReducer
+export default tasksReducer

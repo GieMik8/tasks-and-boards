@@ -1,5 +1,5 @@
 export { default as AppContainer } from './AppContainer'
-export { default as TasksColumnList } from './TasksColumnList'
+export { default as TasksColumnWrapper } from './TasksColumnWrapper'
 export { default as TasksColumn } from './TasksColumn'
 export { default as Task } from './Task'
 export { default as Modal } from './Modal'

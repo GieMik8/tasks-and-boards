@@ -4,7 +4,7 @@ import { DragDropContext } from 'react-beautiful-dnd'
 import { List } from 'immutable'
 import PropTypes from 'prop-types'
 
-import { TasksColumnList, TasksColumn } from 'components'
+import { TasksColumnWrapper, TasksColumn } from 'components'
 import { moveTask, reorderTask } from 'modules/tasks'
 import { openModal } from 'modules/ui'
 import { modalType } from 'types'
@@ -54,14 +54,16 @@ const TasksBoard = ({ boardId }) => {
     [dispatch],
   )
 
+  console.log({ boardId, columnsList })
+
   return (
     <div className={classes.wrapper}>
       <DragDropContext onDragEnd={onDrag}>
-        <TasksColumnList onCreateColumn={openColumnCreateModal}>
+        <TasksColumnWrapper onCreateColumn={openColumnCreateModal}>
           {columnsList.map(columnId => (
             <TasksColumn onCreateTask={openTaskCreateModal} key={columnId} id={columnId} />
           ))}
-        </TasksColumnList>
+        </TasksColumnWrapper>
       </DragDropContext>
     </div>
   )

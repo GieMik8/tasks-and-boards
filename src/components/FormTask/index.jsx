@@ -21,10 +21,10 @@ const FormTask = ({ onSubmit, initial, buttonText }) => {
 
   const validate = () => {
     if (!title) {
-      return setTitleError('Title is not defined')
+      return setTitleError('Title is require')
     }
     if (!description) {
-      return setDescriptionError('Description is not defined')
+      return setDescriptionError('Description is required')
     }
     return onSubmit({ title, description })
   }
