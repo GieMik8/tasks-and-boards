@@ -10,12 +10,14 @@ import { openModal } from 'modules/ui'
 import { modalType } from 'types'
 import useStyles from './style'
 
+const emptyList = List()
+
 const TasksBoard = ({ boardId }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
 
   const columnsList =
-    useSelector(state => state.tasks.getIn(['columnsByBoardId', boardId])) || List()
+    useSelector(state => state.tasks.getIn(['columnsByBoardId', boardId])) || emptyList
 
   const onDrag = useCallback(
     dragging => {
@@ -53,8 +55,6 @@ const TasksBoard = ({ boardId }) => {
     id => dispatch(openModal({ target: modalType.TASK_CREATE, params: { columnId: id } })),
     [dispatch],
   )
-
-  console.log({ boardId, columnsList })
 
   return (
     <div className={classes.wrapper}>

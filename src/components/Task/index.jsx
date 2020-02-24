@@ -1,10 +1,11 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Draggable } from 'react-beautiful-dnd'
 import PropTypes from 'prop-types'
 import { Typography, IconButton } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
+import moment from 'moment'
 
 import { openModal } from 'modules/ui'
 import { deleteTask as deleteTaskAction } from 'modules/tasks'
@@ -23,6 +24,16 @@ const Task = ({ id, index }) => {
 
   const deleteTask = useCallback(() => dispatch(deleteTaskAction(id)), [dispatch, id])
 
+  const taskStatus = useMemo(() => {
+    const updatedAt = task.get('updatedAt')
+    if (updatedAt) {
+      return `updated ${moment(updatedAt).fromNow()}`
+    }
+
+    const createdAt = task.get('createdAt')
+    return `created ${moment(createdAt).fromNow()}`
+  }, [task])
+
   return (
     <Draggable draggableId={id} index={index}>
       {provided => (
@@ -37,12 +48,15 @@ const Task = ({ id, index }) => {
             <Typography variant="subtitle2">{task.get('description')}</Typography>
           </div>
           <div className={classes.footer}>
-            <IconButton size="small" onClick={editTask} color="secondary" aria-label="Edit">
-              <EditIcon fontSize="small" />
-            </IconButton>
-            <IconButton size="small" onClick={deleteTask} aria-label="Delete">
-              <DeleteIcon fontSize="small" />
-            </IconButton>
+            <Typography variant="caption">{taskStatus}</Typography>
+            <div className={classes.buttons}>
+              <IconButton size="small" onClick={editTask} color="secondary" aria-label="Edit">
+                <EditIcon fontSize="small" />
+              </IconButton>
+              <IconButton size="small" onClick={deleteTask} aria-label="Delete">
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </div>
           </div>
         </div>
       )}

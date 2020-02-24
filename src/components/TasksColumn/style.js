@@ -17,6 +17,7 @@ export default makeStyles(theme => ({
   title: {
     textDecoration: 'none',
     color: theme.colors.gray,
+    textTransform: 'none',
   },
   addButtonWrapper: {
     padding: '10px',

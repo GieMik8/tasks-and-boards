@@ -11,6 +11,7 @@ import {
   createTask,
   deleteTask,
 } from './actions'
+import moment from 'moment'
 
 const initialState = fromJS({
   entities: {},
@@ -64,12 +65,16 @@ const tasksReducer = handleActions(
         .getIn(['entities', 'tasks', payload.id])
         .set('title', payload.title)
         .set('description', payload.description)
+        .set('updatedAt', moment().valueOf())
       return state.setIn(['entities', 'tasks', payload.id], task)
     },
     [createTask]: (state, { payload }) => {
       const targetColumnTasks = state.getIn(['tasksByColumnId', payload.columnId]) || List()
       return state
-        .setIn(['entities', 'tasks', payload.id], fromJS(payload))
+        .setIn(
+          ['entities', 'tasks', payload.id],
+          fromJS(payload).set('createdAt', moment().valueOf()),
+        )
         .setIn(['tasksByColumnId', payload.columnId], targetColumnTasks.push(payload.id))
     },
     [deleteTask]: (state, { payload }) => {

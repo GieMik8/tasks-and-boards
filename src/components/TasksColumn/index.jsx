@@ -37,7 +37,7 @@ const TasksColumn = ({ id, onCreateTask }) => {
           {...provided.droppableProps}
         >
           <div className={classes.header}>
-            <Button className={classes.title} onClick={editColumn}>
+            <Button variant="text" className={classes.title} onClick={editColumn}>
               {column.get('title')}
               <EditIcon style={{ fontSize: 14, marginLeft: 5 }} />
             </Button>

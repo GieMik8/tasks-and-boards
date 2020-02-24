@@ -16,10 +16,14 @@ export default makeStyles(theme => ({
   },
   footer: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     borderTopStyle: 'solid',
     borderTopWidth: '1px',
     paddingTop: '6px',
     borderTopColor: theme.colors.gray3,
+  },
+  buttons: {
+    display: 'flex',
+    alignItems: 'center',
   },
 }))
