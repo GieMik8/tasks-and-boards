@@ -10,7 +10,7 @@ export default makeStyles(theme => ({
     borderColor: theme.colors.gray,
   },
   inner: {
-    display: 'flex',
+    display: 'inline-flex',
     padding: '10px 0',
     minHeight: '100%',
   },
