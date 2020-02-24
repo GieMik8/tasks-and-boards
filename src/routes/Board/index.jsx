@@ -22,6 +22,7 @@ const Board2 = () => {
 
   const board = useSelector(state => state.tasks.getIn(['entities', 'boards', boardId]))
 
+  // Note: open modal if "selectedColumn" or "selectedTask" is set in query
   useEffect(() => {
     if (selectedColumn) {
       dispatch(openModal({ target: modalType.COLUMN_EDIT, params: { id: selectedColumn } }))
@@ -30,7 +31,7 @@ const Board2 = () => {
     if (selectedTask) {
       dispatch(openModal({ target: modalType.TASK_EDIT, params: { id: selectedTask } }))
     }
-  }, [selectedColumn, selectedTask, dispatch])
+  }, []) // eslint-disable-line
 
   if (!board) {
     return null

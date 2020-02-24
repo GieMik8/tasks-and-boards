@@ -9,5 +9,7 @@ export default makeStyles(theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(3, 6, 4),
+    maxWidth: '90%',
+    width: '600px',
   },
 }))

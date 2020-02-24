@@ -9,9 +9,7 @@ import useStyle from './style'
 const FormTask = ({ onSubmit, initial, buttonText }) => {
   const initialData = initial || { title: '', description: '' }
   const [title, titleError, setTitle, setTitleError] = useFieldControl(initialData.title)
-  const [description, descriptionError, setDescription, setDescriptionError] = useFieldControl(
-    initialData.description,
-  )
+  const [description, descriptionError, setDescription] = useFieldControl(initialData.description)
   const classes = useStyle()
 
   useEffect(() => {
@@ -22,9 +20,6 @@ const FormTask = ({ onSubmit, initial, buttonText }) => {
   const validate = () => {
     if (!title) {
       return setTitleError('Title is require')
-    }
-    if (!description) {
-      return setDescriptionError('Description is required')
     }
     return onSubmit({ title, description })
   }
@@ -48,7 +43,6 @@ const FormTask = ({ onSubmit, initial, buttonText }) => {
           value={description}
           onChange={setDescription}
           margin="normal"
-          required
           label="Description"
           variant="outlined"
         />

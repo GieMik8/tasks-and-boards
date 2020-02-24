@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions'
 import { List, fromJS } from 'immutable'
+import moment from 'moment'
 
 import {
   fetchDataSuccess,
@@ -11,7 +12,6 @@ import {
   createTask,
   deleteTask,
 } from './actions'
-import moment from 'moment'
 
 const initialState = fromJS({
   entities: {},
