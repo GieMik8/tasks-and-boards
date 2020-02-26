@@ -17,6 +17,7 @@ import {
   editTask,
   deleteTask,
   createTask,
+  fetchMockData,
 } from './actions'
 
 const fetchDataEpic = action$ =>
@@ -27,6 +28,14 @@ const fetchDataEpic = action$ =>
       if (persistedTasksState) {
         return of(fetchDataSuccess(JSON.parse(persistedTasksState)))
       }
+      return of(fetchMockData())
+    }),
+  )
+
+const fetchMockDataEpic = action$ =>
+  action$.pipe(
+    ofType(fetchMockData.toString()),
+    switchMap(() => {
       const normalized = normalize(
         { boards, tasks, columns },
         { boards: [board], tasks: [task], columns: [column] },
@@ -59,4 +68,4 @@ const autoPersistTasksEpic = (action$, state$) =>
     }),
   )
 
-export default combineEpics(fetchDataEpic, autoPersistTasksEpic)
+export default combineEpics(fetchDataEpic, autoPersistTasksEpic, fetchMockDataEpic)

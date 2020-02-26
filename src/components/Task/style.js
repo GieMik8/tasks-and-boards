@@ -17,6 +17,7 @@ export default makeStyles(theme => ({
   footer: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
     borderTopStyle: 'solid',
     borderTopWidth: '1px',
     paddingTop: '6px',

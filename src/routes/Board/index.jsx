@@ -15,7 +15,7 @@ import { useQuery } from 'hooks'
 import { openModal } from 'modules/ui'
 import { modalType } from 'types'
 
-const Board2 = () => {
+const Board = () => {
   const dispatch = useDispatch()
   const { boardId } = useParams()
   const { selectedTask, selectedColumn } = useQuery()
@@ -51,4 +51,4 @@ const Board2 = () => {
   )
 }
 
-export default Board2
+export default Board

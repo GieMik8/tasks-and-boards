@@ -9,6 +9,7 @@ export const CREATE_TASK = 'tasks/CREATE_TASK'
 export const EDIT_TASK = 'tasks/EDIT_TASK'
 export const DELETE_TASK = 'tasks/DELETE_TASK'
 export const FETCH_DATA = createActionSet('tasks/FETCH_DATA')
+export const FETCH_MOCK_DATA = 'tasks/FETCH_MOCK_DATA'
 
 export const moveTask = createAction(MOVE_TASK)
 export const reorderTask = createAction(REORDER_TASK)
@@ -20,3 +21,4 @@ export const deleteTask = createAction(DELETE_TASK)
 export const fetchData = createAction(FETCH_DATA.PENDING)
 export const fetchDataSuccess = createAction(FETCH_DATA.SUCCESS)
 export const fetchDataError = createAction(FETCH_DATA.ERROR)
+export const fetchMockData = createAction(FETCH_MOCK_DATA)

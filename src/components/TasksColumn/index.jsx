@@ -73,4 +73,4 @@ TasksColumn.defaultProps = {
   onCreateTask: () => {},
 }
 
-export default TasksColumn
+export default React.memo(TasksColumn)
